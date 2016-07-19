@@ -1,13 +1,23 @@
 <resources>
+  <!-- The application name -->
   <string name="app_name">Stock Hawk</string>
 
-  <string name="action_example">Example action</string>
-
+  <!-- Settings option in action bar -->
   <string name="action_settings">Settings</string>
+
+  <!-- Option in action bar to change percentages to dollars -->
   <string name="action_change_units">Change Units</string>
+
   <string name="symbol_search">Symbol Search</string>
+
+  <!-- Text that inside a search form -->
   <string name="content_test">Search for a Stock Symbol</string>
+
+  <!-- Hint text in EditText -->
   <string name="input_hint">FB</string>
+
   <string name="input_prefill"></string>
+
+  <!--A toast that appears when there is no internet connection -->
   <string name="network_toast">Uh-oh! This app requires an internet connection</string>
 </resources>
