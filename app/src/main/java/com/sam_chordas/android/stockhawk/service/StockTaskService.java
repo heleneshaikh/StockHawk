@@ -65,7 +65,9 @@ public class StockTaskService extends GcmTaskService {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+
         //when none added, YHOO, AAPL, GOOG, MSFT added as default.
+
         if (params.getTag().equals("init") || params.getTag().equals("periodic")) {
             isUpdate = true;
             initQueryCursor = context.getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,

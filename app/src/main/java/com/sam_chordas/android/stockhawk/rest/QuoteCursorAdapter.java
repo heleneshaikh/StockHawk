@@ -80,8 +80,10 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         int percentChangeIndex = cursor.getColumnIndex("percent_change"); //3
         int changeIndex = cursor.getColumnIndex("change"); //4
 
+
         viewHolder.symbol.setText(cursor.getString(indexSymbol));  //YHOO, AAPL, GOOG, MSFT
         viewHolder.bidPrice.setText(cursor.getString(bidPriceIndex)); //38.25, 99.26, 732.53
+
         if (cursor.getInt( cursor.getColumnIndex("is_up")) == 1) {
                 viewHolder.change.setBackgroundResource(
                        R.drawable.percent_change_pill_green);
