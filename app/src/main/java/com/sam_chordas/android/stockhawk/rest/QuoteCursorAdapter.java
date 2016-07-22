@@ -28,6 +28,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
 
     private static Context context;
     private static Typeface robotoLight;
+    private static Typeface lalezar;
 
     public QuoteCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor);
@@ -47,6 +48,8 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
             super(itemView);
             ButterKnife.bind(this, itemView);
             symbol.setTypeface(robotoLight);
+            bidPrice.setTypeface(lalezar);
+            change.setTypeface(lalezar);
         }
 
         @Override
@@ -68,6 +71,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+        lalezar = Typeface.createFromAsset(context.getAssets(), "fonts/Lalezar-Regular.ttf");
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_quote, parent, false); //instead of card view
         return new ViewHolder(itemView);
@@ -80,11 +84,10 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         int percentChangeIndex = cursor.getColumnIndex("percent_change"); //3
         int changeIndex = cursor.getColumnIndex("change"); //4
 
-
         viewHolder.symbol.setText(cursor.getString(indexSymbol));  //YHOO, AAPL, GOOG, MSFT
         viewHolder.bidPrice.setText(cursor.getString(bidPriceIndex)); //38.25, 99.26, 732.53
 
-        if (cursor.getInt( cursor.getColumnIndex("is_up")) == 1) {
+        if (cursor.getInt(cursor.getColumnIndex("is_up")) == 1) {
                 viewHolder.change.setBackgroundResource(
                        R.drawable.percent_change_pill_green);
         } else {

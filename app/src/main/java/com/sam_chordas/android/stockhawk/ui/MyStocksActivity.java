@@ -58,7 +58,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         } else {
             networkToast();
         }
-
         setContentView(R.layout.activity_my_stocks);
 
         // The intent service is for executing immediate pulls from the Yahoo API
@@ -83,8 +82,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 new RecyclerViewItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-                        //TODO:
-                        // do something on item click
+                        //TODO: do something on item click
                     }
                 }));
         recyclerView.setAdapter(cursorAdapter);
@@ -106,15 +104,10 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                     Cursor c = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
                                             new String[]{QuoteColumns.SYMBOL}, QuoteColumns.SYMBOL + "= ?",
                                             new String[]{input.toString()}, null);
+
                                     if (c.getCount() != 0) {
-                                        Toast toast =
-                                                Toast.makeText(MyStocksActivity.this, "This stock is already saved!",
-                                                        Toast.LENGTH_LONG);
-                                        toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
-                                        toast.show();
-                                        return;
+                                        showToast(R.string.already_saved);
                                     } else {
-                                        // Add the stock to DB
                                         serviceIntent.putExtra("tag", "add");
                                         serviceIntent.putExtra("symbol", input.toString());
                                         startService(serviceIntent);
@@ -125,7 +118,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 } else {
                     networkToast();
                 }
-
             }
         });
 
@@ -149,10 +141,14 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
                     .setRequiresCharging(false)
                     .build();
-            // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
-            // are updated.
+            // Schedule task with tag "periodic." This ensure that only the stocks present in the DB are updated.
             GcmNetworkManager.getInstance(this).schedule(periodicTask);
         }
+    }
+
+    public void showToast(int toast) {
+        Toast.makeText(MyStocksActivity.this, toast,
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -165,26 +161,15 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         Toast.makeText(context, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
     }
 
-    public void restoreActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(title);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.my_stocks, menu);
         menu.findItem(R.id.action_settings).setTitle("go to settings");
-        restoreActionBar();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -193,11 +178,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         }
 
         if (id == R.id.action_change_units) {
-            // this is for changing stock changes from percent value to dollar value
             Utils.showPercent = !Utils.showPercent;
             this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
         }
-
         return super.onOptionsItemSelected(item);
     }
 

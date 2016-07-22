@@ -35,8 +35,7 @@ public class StockTaskService extends GcmTaskService {
     private boolean isUpdate;
     private final static String ENDPOINT = "https://query.yahooapis.com/v1/public/yql?q=";
 
-    public StockTaskService() {
-    }
+    public StockTaskService() {}
 
     public StockTaskService(Context context) {
         this.context = context;
@@ -77,7 +76,7 @@ public class StockTaskService extends GcmTaskService {
                 // Init task. Populates DB with quotes for the symbols seen below
                 try {
                     urlStringBuilder.append(
-                            URLEncoder.encode("\"YHOO\",\"AAPL\",\"GOOG\",\"MSFT\")", "UTF-8"));
+                            URLEncoder.encode("\"YHOO\")", "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
