@@ -175,6 +175,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.my_stocks, menu);
+        menu.findItem(R.id.action_settings).setTitle("go to settings");
         restoreActionBar();
         return true;
     }

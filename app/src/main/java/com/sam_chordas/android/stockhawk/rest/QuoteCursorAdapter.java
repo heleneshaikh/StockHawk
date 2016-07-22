@@ -75,18 +75,23 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final Cursor cursor) {
-        viewHolder.symbol.setText(cursor.getString(cursor.getColumnIndex("symbol")));
-        viewHolder.bidPrice.setText(cursor.getString(cursor.getColumnIndex("bid_price")));
-        if (cursor.getInt(cursor.getColumnIndex("is_up")) == 1) {
+        int indexSymbol = cursor.getColumnIndex("symbol"); //1
+        int bidPriceIndex = cursor.getColumnIndex("bid_price"); //2
+        int percentChangeIndex = cursor.getColumnIndex("percent_change"); //3
+        int changeIndex = cursor.getColumnIndex("change"); //4
+
+        viewHolder.symbol.setText(cursor.getString(indexSymbol));  //YHOO, AAPL, GOOG, MSFT
+        viewHolder.bidPrice.setText(cursor.getString(bidPriceIndex)); //38.25, 99.26, 732.53
+        if (cursor.getInt( cursor.getColumnIndex("is_up")) == 1) {
                 viewHolder.change.setBackgroundResource(
                        R.drawable.percent_change_pill_green);
         } else {
                 viewHolder.change.setBackgroundResource (R.drawable.percent_change_pill_red);
         }
         if (Utils.showPercent) {
-            viewHolder.change.setText(cursor.getString(cursor.getColumnIndex("percent_change")));
+            viewHolder.change.setText(cursor.getString(percentChangeIndex));
         } else {
-            viewHolder.change.setText(cursor.getString(cursor.getColumnIndex("change")));
+            viewHolder.change.setText(cursor.getString(changeIndex));
         }
     }
 
@@ -103,6 +108,4 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
     public int getItemCount() {
         return super.getItemCount();
     }
-
-
 }

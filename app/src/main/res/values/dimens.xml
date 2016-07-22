@@ -8,4 +8,5 @@
   <dimen name="navigation_drawer_width">240dp</dimen>
   <dimen name="lin_padding">16dp</dimen>
   <dimen name="tv_padding">3dp</dimen>
+  <dimen name="price_padding">10sp</dimen>
 </resources>

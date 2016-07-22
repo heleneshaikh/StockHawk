@@ -3,7 +3,7 @@
   <string name="app_name">Stock Hawk</string>
 
   <!-- Settings option in action bar -->
-  <string name="action_settings">Settings</string>
+  <string name="action_settings">"Go to settings"</string>
 
   <!-- Option in action bar to change percentages to dollars -->
   <string name="action_change_units">Change Units</string>
