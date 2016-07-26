@@ -34,6 +34,9 @@ public class Utils {
                 if (count == 1) {
                     jsonObject = jsonObject.getJSONObject("results")
                             .getJSONObject("quote");
+                    if (jsonObject.getString("Bid").equals("null")) {
+                        return null;
+                    }
                     batchOperations.add(buildBatchOperation(jsonObject));
                 } else {
                     resultsArray = jsonObject.getJSONObject("results").getJSONArray("quote");
@@ -81,6 +84,8 @@ public class Utils {
             //PUT DATA IN DB COLUMNS
             String change = jsonObject.getString("Change");
             builder.withValue(QuoteColumns.SYMBOL, jsonObject.getString("symbol"));
+            //don't add to db if result in null
+
             builder.withValue(QuoteColumns.BIDPRICE, truncateBidPrice(jsonObject.getString("Bid")));
             builder.withValue(QuoteColumns.PERCENT_CHANGE, truncateChange(
                     jsonObject.getString("ChangeinPercent"), true));

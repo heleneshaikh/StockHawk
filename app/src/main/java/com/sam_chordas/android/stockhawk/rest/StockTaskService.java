@@ -1,16 +1,22 @@
 package com.sam_chordas.android.stockhawk.rest;
 
+import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
+import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.squareup.okhttp.OkHttpClient;
@@ -20,6 +26,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * Created by sam_chordas on 9/30/15.
@@ -27,7 +34,7 @@ import java.net.URLEncoder;
  * and is used for the initialization and adding task as well.
  */
 
-//FETCH DATA
+//FETCH DATA FROM YAHOO API
 
 public class StockTaskService extends GcmTaskService {
     private String LOG_TAG = StockTaskService.class.getSimpleName();
@@ -37,7 +44,10 @@ public class StockTaskService extends GcmTaskService {
     private boolean isUpdate;
     private final static String ENDPOINT = "https://query.yahooapis.com/v1/public/yql?q=";
 
-    public StockTaskService() {}
+    public static final String ACTION_DATA_UPDATED = "com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED";
+
+    public StockTaskService() {
+    }
 
     public StockTaskService(Context context) {
         this.context = context;
@@ -114,6 +124,7 @@ public class StockTaskService extends GcmTaskService {
         String urlString;
         String getResponse;
         int result = GcmNetworkManager.RESULT_FAILURE;
+        updateWidget();
 
         if (urlStringBuilder != null) {
             urlString = urlStringBuilder.toString();
@@ -122,14 +133,24 @@ public class StockTaskService extends GcmTaskService {
                 result = GcmNetworkManager.RESULT_SUCCESS;
                 try {
                     ContentValues contentValues = new ContentValues();
-                    // update ISCURRENT to 0 (false) so new data is current
-                    if (isUpdate) {
+                    if (isUpdate && getResponse!= null) { //here
                         contentValues.put(QuoteColumns.ISCURRENT, 0);
                         context.getContentResolver().update(QuoteProvider.Quotes.CONTENT_URI, contentValues,
                                 null, null);
                     }
-                    context.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
-                            Utils.quoteJsonToContentVals(getResponse));
+                    ArrayList<ContentProviderOperation> arrayList = Utils.quoteJsonToContentVals(getResponse);
+                    if (arrayList == null) {
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(new Runnable() {
+                            public void run() {
+                                Toast.makeText(context, R.string.no_exist, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } else {
+                        context.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
+                                arrayList);
+                    }
+
                 } catch (RemoteException | OperationApplicationException e) {
                     Log.e(LOG_TAG, "Error applying batch insert", e);
                 }
@@ -138,6 +159,14 @@ public class StockTaskService extends GcmTaskService {
             }
         }
         return result;
+    }
+
+    private void updateWidget() {
+        Context mContext = context;
+        // Setting the package ensures that only components in our app will receive the broadcast
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(mContext.getPackageName());
+        mContext.sendBroadcast(dataUpdatedIntent);
     }
 
 }

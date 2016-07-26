@@ -21,7 +21,7 @@ import com.sam_chordas.android.stockhawk.touch_helper.ItemTouchHelperViewHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+//RETRIEVE AND SHOW DATA
 public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAdapter.ViewHolder>
         implements ItemTouchHelperAdapter {
 
@@ -62,8 +62,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
         }
 
         @Override
-        public void onClick(View v) {
-        }
+        public void onClick(View v) {}
     }
 
     @Override

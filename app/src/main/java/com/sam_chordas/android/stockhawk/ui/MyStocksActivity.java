@@ -8,6 +8,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -103,9 +104,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                             new String[]{QuoteColumns.SYMBOL}, QuoteColumns.SYMBOL + "= ?",
                                             new String[]{input.toString()}, null);
 
-                                    if (c.moveToFirst() == false) {
-                                        showToast(R.string.no_exist);
-                                    } else if (c.getCount() != 0) {
+                                   if (c.getCount() != 0) {
                                         showToast(R.string.already_saved);
                                     } else {
                                         serviceIntent.putExtra("tag", "add");
@@ -161,10 +160,17 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         Toast.makeText(context, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
     }
 
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(title);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.my_stocks, menu);
-        menu.findItem(R.id.action_settings).setTitle("go to settings");
+        restoreActionBar();
         return true;
     }
 
