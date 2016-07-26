@@ -103,7 +103,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                             new String[]{QuoteColumns.SYMBOL}, QuoteColumns.SYMBOL + "= ?",
                                             new String[]{input.toString()}, null);
 
-                                    if (c.getCount() != 0) {
+                                    if (c.moveToFirst() == false) {
+                                        showToast(R.string.no_exist);
+                                    } else if (c.getCount() != 0) {
                                         showToast(R.string.already_saved);
                                     } else {
                                         serviceIntent.putExtra("tag", "add");
@@ -170,7 +172,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -203,5 +204,4 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     public void onLoaderReset(Loader<Cursor> loader) {
         cursorAdapter.swapCursor(null);
     }
-
 }
