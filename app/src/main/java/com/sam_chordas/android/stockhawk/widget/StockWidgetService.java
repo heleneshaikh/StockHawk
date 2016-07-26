@@ -3,10 +3,10 @@ package com.sam_chordas.android.stockhawk.widget;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Binder;
-import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
@@ -22,7 +22,8 @@ public class StockWidgetService extends RemoteViewsService {
             private Cursor data = null;
 
             @Override
-            public void onCreate() {}
+            public void onCreate() {
+            }
 
             @Override
             public void onDataSetChanged() {
@@ -84,20 +85,6 @@ public class StockWidgetService extends RemoteViewsService {
                         views.setInt(R.id.change, "setBackgroundResource",
                                 R.drawable.percent_change_pill_red);
                     }
-
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-//                        views.setContentDescription(R.id.widget_stock_symbol,
-//                                getString(R.string.stock_symbol_content_description) + " " + symbol);
-//                        views.setContentDescription(R.id.bid,
-//                                getString(R.string.bid_price_content_description) + " " + bid);
-//                        if (Utils.showPercent) {
-//                            views.setContentDescription(R.id.change,
-//                                    getString(R.string.change_content_description) + " " + percentChange);
-//                        } else {
-//                            views.setContentDescription(R.id.change,
-//                                    getString(R.string.change_content_description) + " " + change);
-//                        }
-//                    }
 
                     final Intent fillInIntent = new Intent();
                     fillInIntent.setAction(StockWidgetProvider.DETAIL_ACTION);

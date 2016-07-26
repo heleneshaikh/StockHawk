@@ -27,9 +27,8 @@ public class StockWidgetProvider extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stock_widget);
 
             Intent intent = new Intent(context, MyStocksActivity.class); //not stock service?
-            //pendingIntent => widget
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            views.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            intent.setAction(DETAIL_ACTION);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 setRemoteAdapter(context, views);
@@ -38,13 +37,8 @@ public class StockWidgetProvider extends AppWidgetProvider {
             }
 
             Intent intentTemplate = new Intent(context, DetailActivity.class);
-            intentTemplate.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-            intentTemplate.setAction(DETAIL_ACTION);
-            PendingIntent pendingIntentTemplate = android.support.v4.app.TaskStackBuilder.create(context)
-                    .addNextIntentWithParentStack(intentTemplate)
-                    .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context,0, intentTemplate,PendingIntent.FLAG_UPDATE_CURRENT );
             views.setPendingIntentTemplate(R.id.widget_list, pendingIntentTemplate);
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.widget_list);
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
