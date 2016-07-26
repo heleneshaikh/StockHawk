@@ -17,13 +17,12 @@ import com.sam_chordas.android.stockhawk.rest.Utils;
  */
 public class StockWidgetService extends RemoteViewsService {
     @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
+    public RemoteViewsFactory onGetViewFactory(Intent intent) { //factory acts as an adapter
         return new RemoteViewsFactory() {
             private Cursor data = null;
 
             @Override
-            public void onCreate() {
-            }
+            public void onCreate() {}
 
             @Override
             public void onDataSetChanged() {
@@ -63,12 +62,10 @@ public class StockWidgetService extends RemoteViewsService {
                 RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_list);
 
                 if (data.moveToPosition(position)) {
-
                     String symbol = data.getString(data.getColumnIndex(QuoteColumns.SYMBOL));
                     String bid = data.getString(data.getColumnIndex(QuoteColumns.BIDPRICE));
                     String change = data.getString(data.getColumnIndex(QuoteColumns.CHANGE));
                     String percentChange = data.getString(data.getColumnIndex(QuoteColumns.PERCENT_CHANGE));
-
                     views.setTextViewText(R.id.symbol, symbol);
                     views.setTextViewText(R.id.bid, bid);
 
@@ -86,12 +83,11 @@ public class StockWidgetService extends RemoteViewsService {
                                 R.drawable.percent_change_pill_red);
                     }
 
-                    final Intent fillInIntent = new Intent();
-                    fillInIntent.setAction(StockWidgetProvider.DETAIL_ACTION);
-                    fillInIntent.putExtra(QuoteColumns.SYMBOL, data.getString(data.getColumnIndex(QuoteColumns.SYMBOL)));
-                    fillInIntent.putExtra(QuoteColumns.BIDPRICE, data.getString(data.getColumnIndex(QuoteColumns.BIDPRICE)));
-                    views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
-
+                    final Intent intent = new Intent();
+                    intent.setAction(StockWidgetProvider.DETAIL_ACTION);
+                    intent.putExtra(QuoteColumns.SYMBOL, data.getString(data.getColumnIndex(QuoteColumns.SYMBOL)));
+                    intent.putExtra(QuoteColumns.BIDPRICE, data.getString(data.getColumnIndex(QuoteColumns.BIDPRICE)));
+                    views.setOnClickFillInIntent(R.id.widget_list_item, intent);
                 }
                 return views;
             }

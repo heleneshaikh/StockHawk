@@ -1,31 +1,26 @@
 <resources>
     <!-- The application name -->
     <string name="app_name">Stock Hawk</string>
-
+    <!-- Toast that appears when the app is not connected to the internet-->
+    <string name="network_issue">There is no internet connection</string>
     <!-- Settings option in action bar -->
     <string name="action_settings">"Go to settings"</string>
-
     <!-- Option in action bar to change percentages to dollars -->
     <string name="action_change_units">Change Units</string>
-
     <!-- Title of MaterialDialog that appears after clicking on Floating Action Button -->
     <string name="symbol_search">Symbol Search</string>
-
     <!-- Text content from MaterialDialog -->
     <string name="content_test">Search for a Stock Symbol</string>
-
     <!-- Hint text in input field from MaterialDialog -->
     <string name="input_hint">FB</string>
-
-    <string name="input_prefill"></string>
-
-    <!--A toast that appears when there is no internet connection -->
-    <string name="network_toast">Uh-oh! This app requires an internet connection</string>
-    <string name="tv_google">GOOG</string>
+    <!--autocomplete in input text field-->
+    <string name="input_prefill">pre fill</string>
+    <!--A toast that appears when the stock has already been saved -->
     <string name="already_saved">This stock is already saved!</string>
+    <!--A toast that appears when a quote does not exist -->
     <string name="no_exist">This quote does not exist</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <!--A toast that appears when the database is not available -->
     <string name="not_available">Database not available</string>
-    <string name="stock_details">stock details</string>
+    <!--show details of a given stock-->
+    <string name="stock_details">Stock details</string>
 </resources>

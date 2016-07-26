@@ -25,13 +25,15 @@ public class StockWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
+            //Create remoteview containing widget layout
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stock_widget);
 
+            //start MyStocksActivity when click on title
             Intent intent = new Intent(context, MyStocksActivity.class); //not stock service?
-            //pendingIntent => widget
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             views.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
+            //set adapter to fill data
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                 setRemoteAdapter(context, views);
             } else {
