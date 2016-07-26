@@ -27,6 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.DetailActivity"
+            android:label="@string/stock_details"
+            android:parentActivityName=".ui.MyStocksActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MyStocksActivity"/>
+        </activity>
 
         <service
             android:name=".rest.StockTaskService"
@@ -46,6 +52,7 @@
 
         <receiver android:name=".widget.StockWidgetProvider">
             <intent-filter>
+                <action android:name="com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 

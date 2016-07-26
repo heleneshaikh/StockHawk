@@ -9,7 +9,7 @@
         android:id="@+id/widget_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/abc_action_bar_default_height_material"
-        android:background="@color/material_blue_500">
+        android:background="#29537B">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,14 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#FFFFFF">
+        android:background="#36AFCC"
+        android:textColor="#192428">
         <ListView
             android:id="@+id/widget_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
             android:dividerHeight="0dp"
-            tools:listitem="@layout/widget_list" />
+            tools:listitem="@layout/widget_list"/>
         <TextView
             android:id="@+id/widget_empty"
             android:layout_width="match_parent"
