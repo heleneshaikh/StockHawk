@@ -1,8 +1,11 @@
 package com.sam_chordas.android.stockhawk.rest;
 
 import android.content.ContentProviderOperation;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 
@@ -21,6 +24,7 @@ public class Utils {
 
     private static String LOG_TAG = Utils.class.getSimpleName();
     public static boolean showPercent = true;
+    Context context;
 
     public static ArrayList quoteJsonToContentVals(String JSON) {
         ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
@@ -35,7 +39,7 @@ public class Utils {
                     jsonObject = jsonObject.getJSONObject("results")
                             .getJSONObject("quote");
                     if (jsonObject.getString("Bid").equals("null")) {
-                        return null;
+                       return null;
                     }
                     batchOperations.add(buildBatchOperation(jsonObject));
                 } else {
@@ -84,8 +88,6 @@ public class Utils {
             //PUT DATA IN DB COLUMNS
             String change = jsonObject.getString("Change");
             builder.withValue(QuoteColumns.SYMBOL, jsonObject.getString("symbol"));
-            //don't add to db if result in null
-
             builder.withValue(QuoteColumns.BIDPRICE, truncateBidPrice(jsonObject.getString("Bid")));
             builder.withValue(QuoteColumns.PERCENT_CHANGE, truncateChange(
                     jsonObject.getString("ChangeinPercent"), true));

@@ -12,7 +12,6 @@ import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.GcmTaskService;
 import com.google.android.gms.gcm.TaskParams;
@@ -22,7 +21,6 @@ import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -46,8 +44,7 @@ public class StockTaskService extends GcmTaskService {
 
     public static final String ACTION_DATA_UPDATED = "com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED";
 
-    public StockTaskService() {
-    }
+    public StockTaskService() {}
 
     public StockTaskService(Context context) {
         this.context = context;
@@ -78,7 +75,6 @@ public class StockTaskService extends GcmTaskService {
         }
 
         //when none added, YHOO, AAPL, GOOG, MSFT added as default.
-
         if (params.getTag().equals("init") || params.getTag().equals("periodic")) {
             isUpdate = true;
             initQueryCursor = context.getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
@@ -133,7 +129,7 @@ public class StockTaskService extends GcmTaskService {
                 result = GcmNetworkManager.RESULT_SUCCESS;
                 try {
                     ContentValues contentValues = new ContentValues();
-                    if (isUpdate && getResponse!= null) { //here
+                    if (isUpdate) {
                         contentValues.put(QuoteColumns.ISCURRENT, 0);
                         context.getContentResolver().update(QuoteProvider.Quotes.CONTENT_URI, contentValues,
                                 null, null);

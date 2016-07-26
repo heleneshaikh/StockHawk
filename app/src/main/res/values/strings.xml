@@ -1,27 +1,30 @@
 <resources>
-  <!-- The application name -->
-  <string name="app_name">Stock Hawk</string>
+    <!-- The application name -->
+    <string name="app_name">Stock Hawk</string>
 
-  <!-- Settings option in action bar -->
-  <string name="action_settings">"Go to settings"</string>
+    <!-- Settings option in action bar -->
+    <string name="action_settings">"Go to settings"</string>
 
-  <!-- Option in action bar to change percentages to dollars -->
-  <string name="action_change_units">Change Units</string>
+    <!-- Option in action bar to change percentages to dollars -->
+    <string name="action_change_units">Change Units</string>
 
-  <!-- Title of MaterialDialog that appears after clicking on Floating Action Button -->
-  <string name="symbol_search">Symbol Search</string>
+    <!-- Title of MaterialDialog that appears after clicking on Floating Action Button -->
+    <string name="symbol_search">Symbol Search</string>
 
-  <!-- Text content from MaterialDialog -->
-  <string name="content_test">Search for a Stock Symbol</string>
+    <!-- Text content from MaterialDialog -->
+    <string name="content_test">Search for a Stock Symbol</string>
 
-  <!-- Hint text in input field from MaterialDialog -->
-  <string name="input_hint">FB</string>
+    <!-- Hint text in input field from MaterialDialog -->
+    <string name="input_hint">FB</string>
 
-  <string name="input_prefill"></string>
+    <string name="input_prefill"></string>
 
-  <!--A toast that appears when there is no internet connection -->
-  <string name="network_toast">Uh-oh! This app requires an internet connection</string>
-  <string name="tv_google">GOOG</string>
-  <string name="already_saved">This stock is already saved!</string>
-  <string name="no_exist">This quote does not exist</string>
+    <!--A toast that appears when there is no internet connection -->
+    <string name="network_toast">Uh-oh! This app requires an internet connection</string>
+    <string name="tv_google">GOOG</string>
+    <string name="already_saved">This stock is already saved!</string>
+    <string name="no_exist">This quote does not exist</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="not_available">Database not available</string>
 </resources>
