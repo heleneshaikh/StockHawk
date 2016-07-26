@@ -27,4 +27,5 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="not_available">Database not available</string>
+    <string name="stock_details">stock details</string>
 </resources>

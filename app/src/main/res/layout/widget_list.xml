@@ -7,16 +7,13 @@
     android:orientation="horizontal"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:id="@+id/widget_list_item"
-    android:background="#000000">
+    android:id="@+id/widget_list_item">
 
     <TextView
-        android:id="@+id/widget_stock_symbol"
-        style="@style/StockSymbolTextStyle"
+        android:id="@+id/symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start|center_vertical"
-        tools:text="GOOG" />
+        android:gravity="start" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -25,19 +22,16 @@
         android:gravity="end">
 
         <TextView
-            android:id="@+id/widget_bid_price"
-            style="@style/BidPriceTextStyle"
+            android:id="@+id/bid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="10sp"
-            android:paddingLeft="10sp"
-            android:paddingStart="10sp"
-            android:paddingEnd="10sp"
-            tools:text="1000.00"/>
+            android:paddingRight="@dimen/price_padding"
+            android:paddingLeft="@dimen/price_padding"
+            android:paddingStart="@dimen/price_padding"
+            android:paddingEnd="@dimen/price_padding"/>
 
         <TextView
-            android:id="@+id/widget_change"
-            style="@style/PercentChangeTextStyle"
+            android:id="@+id/change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/percent_change_pill"
