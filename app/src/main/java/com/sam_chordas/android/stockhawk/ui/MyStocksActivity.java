@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.stetho.Stetho;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
@@ -49,6 +50,10 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_stocks);
+
+        Stetho.initializeWithDefaults(this);
+
         context = this;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -57,7 +62,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         } else {
             networkToast();
         }
-        setContentView(R.layout.activity_my_stocks);
 
         // The intent service is for executing immediate pulls from the Yahoo API
         // GCMTaskService can only schedule tasks, they cannot execute immediately

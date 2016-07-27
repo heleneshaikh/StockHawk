@@ -37,4 +37,5 @@ dependencies {
   compile 'com.jakewharton:butterknife:8.2.1'
   apt 'com.jakewharton:butterknife-compiler:8.2.1'
   compile 'com.robinhood.spark:spark:1.1.2'
+  compile 'com.facebook.stetho:stetho:1.3.1'
 }
