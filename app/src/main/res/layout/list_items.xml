@@ -4,8 +4,10 @@
     android:layout_height="72dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="@dimen/layout_list_padding"
+    android:paddingStart="@dimen/layout_list_padding"
+    android:paddingRight="@dimen/layout_list_padding"
+    android:paddingEnd="@dimen/layout_list_padding"
     android:id="@+id/collection_widget_list_item">
 
     <TextView
@@ -16,12 +18,14 @@
     <TextView
         android:id="@+id/collection_widget_bid_price"
         style="@style/BidPriceTextStyle"
-        android:gravity="right|end"
+        android:gravity="end"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingRight="10sp"
-        android:paddingEnd="10sp"
+        android:paddingLeft="@dimen/padding_list_tv"
+        android:paddingStart="@dimen/padding_list_tv"
+        android:paddingRight="@dimen/padding_list_tv"
+        android:paddingEnd="@dimen/padding_list_tv"
         tools:text="1000.00" />
 
 </LinearLayout>

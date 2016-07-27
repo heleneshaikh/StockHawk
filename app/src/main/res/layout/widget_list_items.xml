@@ -7,9 +7,11 @@
     android:background="@color/background_material_dark"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
-    <!--apply layout from list_item_quote-->
+    android:paddingEnd="@dimen/layout_list_padding"
+    android:paddingLeft="@dimen/layout_list_padding"
+    android:paddingRight="@dimen/layout_list_padding"
+    android:paddingStart="@dimen/layout_list_padding">
+    <!--use layout from list_item_quote-->
     <TextView
         android:id="@+id/symbol"
         style="@style/StockSymbolTextStyle"
@@ -20,13 +22,14 @@
     <TextView
         android:id="@+id/bid"
         style="@style/BidPriceTextStyle"
-        android:gravity="right|end"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingRight="10sp"
-        android:paddingEnd="10sp"
-        tools:text="1000.00"/>
-    <!--TODO change dimens name above and below-->
+        android:gravity="right|end"
+        android:paddingEnd="@dimen/padding_list_tv"
+        android:paddingLeft="@dimen/padding_list_tv"
+        android:paddingRight="@dimen/padding_list_tv"
+        android:paddingStart="@dimen/padding_list_tv"
+        tools:text="1000.00" />
 
 </LinearLayout>

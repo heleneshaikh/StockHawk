@@ -36,6 +36,6 @@
             android:gravity="center"
             android:padding="8dp"
             android:textAppearance="?android:textAppearanceLarge"
-            android:text="add quotes"/>
+            android:text="@string/add_quotes"/>
     </FrameLayout>
 </LinearLayout>
