@@ -19,8 +19,8 @@
     <string name="already_saved">This stock is already saved!</string>
     <!--A toast that appears when a quote does not exist -->
     <string name="no_exist">This quote does not exist</string>
-    <!--A toast that appears when the database is not available -->
-    <string name="not_available">Database not available</string>
     <!--show details of a given stock-->
     <string name="stock_details">Stock details</string>
+    <!--title of the widget-->
+    <string name="widget_title">MY STOCKS</string>
 </resources>

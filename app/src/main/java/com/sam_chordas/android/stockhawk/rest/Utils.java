@@ -2,6 +2,7 @@ package com.sam_chordas.android.stockhawk.rest;
 
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,25 +27,24 @@ public class Utils {
     public static boolean showPercent = true;
     Context context;
 
+    @Nullable
     public static ArrayList quoteJsonToContentVals(String JSON) {
         ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
         JSONObject jsonObject = null;
         JSONArray resultsArray = null;
         try {
             jsonObject = new JSONObject(JSON);
-            if (jsonObject != null && jsonObject.length() != 0) {
+            if (jsonObject.length() != 0) {
                 jsonObject = jsonObject.getJSONObject("query");
                 int count = Integer.parseInt(jsonObject.getString("count"));
                 if (count == 1) {
-                    jsonObject = jsonObject.getJSONObject("results")
-                            .getJSONObject("quote");
+                    jsonObject = jsonObject.getJSONObject("results").getJSONObject("quote");
                     if (jsonObject.getString("Bid").equals("null")) {
                        return null;
                     }
                     batchOperations.add(buildBatchOperation(jsonObject));
                 } else {
                     resultsArray = jsonObject.getJSONObject("results").getJSONArray("quote");
-
                     if (resultsArray != null && resultsArray.length() != 0) {
                         for (int i = 0; i < resultsArray.length(); i++) {
                             jsonObject = resultsArray.getJSONObject(i);
@@ -87,7 +87,7 @@ public class Utils {
         try {
             //PUT DATA IN DB COLUMNS
             String change = jsonObject.getString("Change");
-            builder.withValue(QuoteColumns.SYMBOL, jsonObject.getString("symbol"));
+            builder.withValue(QuoteColumns.SYMBOL, jsonObject.getString("symbol")); //like INSERT
             builder.withValue(QuoteColumns.BIDPRICE, truncateBidPrice(jsonObject.getString("Bid")));
             builder.withValue(QuoteColumns.PERCENT_CHANGE, truncateChange(
                     jsonObject.getString("ChangeinPercent"), true));
@@ -98,7 +98,6 @@ public class Utils {
             } else {
                 builder.withValue(QuoteColumns.ISUP, 1);
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

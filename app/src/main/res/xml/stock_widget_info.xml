@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:initialKeyguardLayout="@layout/stock_widget"
-    android:initialLayout="@layout/stock_widget"
+    xmlns:tools="http://schemas.android.com/tools"
     android:minHeight="110dp"
     android:minWidth="180dp"
-    android:previewImage="@drawable/stock_icon"
+    android:initialKeyguardLayout="@layout/stock_widget"
+    android:initialLayout="@layout/stock_widget"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="86400000"
-    android:widgetCategory="home_screen|keyguard"/>
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen|keyguard"
+    tools:ignore="UnusedAttribute"/>

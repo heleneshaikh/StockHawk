@@ -32,16 +32,15 @@ import java.util.ArrayList;
  * and is used for the initialization and adding task as well.
  */
 
-//FETCH DATA FROM YAHOO API
+//FETCH DATA FROM YAHOO API VIA OKHTTP
 
-public class StockTaskService extends GcmTaskService {
+public class StockTaskService extends GcmTaskService { //to schedule tasks
     private String LOG_TAG = StockTaskService.class.getSimpleName();
     private OkHttpClient client = new OkHttpClient();
     private Context context;
     private StringBuilder storedSymbols = new StringBuilder();
     private boolean isUpdate;
     private final static String ENDPOINT = "https://query.yahooapis.com/v1/public/yql?q=";
-
     public static final String ACTION_DATA_UPDATED = "com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED";
 
     public StockTaskService() {}
@@ -55,12 +54,13 @@ public class StockTaskService extends GcmTaskService {
                 .url(url)
                 .build();
 
-        Response response = client.newCall(request).execute();
+        Response response = client.newCall(request).execute(); //make the call
         return response.body().string();
     }
 
     @Override
-    public int onRunTask(TaskParams params) {
+    public int onRunTask(TaskParams params) { //parameters handed off to client app
+        String tag = params.getTag(); //"init"
         Cursor initQueryCursor;
         if (context == null) {
             context = this;
@@ -74,22 +74,22 @@ public class StockTaskService extends GcmTaskService {
             e.printStackTrace();
         }
 
-        //when none added, YHOO, AAPL, GOOG, MSFT added as default.
+        //YHOO, AAPL, GOOG, MSFT added as init data
         if (params.getTag().equals("init") || params.getTag().equals("periodic")) {
             isUpdate = true;
             initQueryCursor = context.getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
-                    new String[]{"Distinct " + QuoteColumns.SYMBOL}, null,
-                    null, null);
+                    new String[]{"Distinct " + QuoteColumns.SYMBOL}, //see if there's already something in DB
+                    null, null, null);
             if (initQueryCursor.getCount() == 0 || initQueryCursor == null) {
                 // Init task. Populates DB with quotes for the symbols seen below
                 try {
-                    urlStringBuilder.append(
+                    urlStringBuilder.append( //append to ENDPOINT
                             URLEncoder.encode("\"YHOO\",\"AAPL\",\"GOOG\",\"MSFT\")", "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             } else if (initQueryCursor != null) {
-                DatabaseUtils.dumpCursor(initQueryCursor);
+                DatabaseUtils.dumpCursor(initQueryCursor); //print to stream
                 initQueryCursor.moveToFirst();
                 for (int i = 0; i < initQueryCursor.getCount(); i++) {
                     storedSymbols.append("\"" +
@@ -105,7 +105,6 @@ public class StockTaskService extends GcmTaskService {
             }
         } else if (params.getTag().equals("add")) {
             isUpdate = false;
-            // get symbol from params.getExtra and build query
             String stockInput = params.getExtras().getString("symbol");
             try {
                 urlStringBuilder.append(URLEncoder.encode("\"" + stockInput + "\")", "UTF-8"));
@@ -118,14 +117,14 @@ public class StockTaskService extends GcmTaskService {
                 + "org%2Falltableswithkeys&callback=");
 
         String urlString;
-        String getResponse;
+        String response;
         int result = GcmNetworkManager.RESULT_FAILURE;
         updateWidget();
 
         if (urlStringBuilder != null) {
             urlString = urlStringBuilder.toString();
             try {
-                getResponse = fetchData(urlString);
+                response = fetchData(urlString);
                 result = GcmNetworkManager.RESULT_SUCCESS;
                 try {
                     ContentValues contentValues = new ContentValues();
@@ -134,7 +133,7 @@ public class StockTaskService extends GcmTaskService {
                         context.getContentResolver().update(QuoteProvider.Quotes.CONTENT_URI, contentValues,
                                 null, null);
                     }
-                    ArrayList<ContentProviderOperation> arrayList = Utils.quoteJsonToContentVals(getResponse);
+                    ArrayList<ContentProviderOperation> arrayList = Utils.quoteJsonToContentVals(response);
                     if (arrayList == null) {
                         Handler handler = new Handler(Looper.getMainLooper());
                         handler.post(new Runnable() {
@@ -146,7 +145,6 @@ public class StockTaskService extends GcmTaskService {
                         context.getContentResolver().applyBatch(QuoteProvider.AUTHORITY,
                                 arrayList);
                     }
-
                 } catch (RemoteException | OperationApplicationException e) {
                     Log.e(LOG_TAG, "Error applying batch insert", e);
                 }

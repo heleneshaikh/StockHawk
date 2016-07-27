@@ -21,7 +21,7 @@ import com.sam_chordas.android.stockhawk.touch_helper.ItemTouchHelperViewHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-//RETRIEVE AND SHOW DATA
+//SHOW DATA IN LIST_ITEM_QUOTE
 public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAdapter.ViewHolder>
         implements ItemTouchHelperAdapter {
 

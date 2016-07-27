@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
@@ -74,13 +75,12 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this); //loader: asynchronously load data
-
         cursorAdapter = new QuoteCursorAdapter(this, null);
         recyclerView.addOnItemTouchListener(new RecyclerViewItemClickListener(this,
                 new RecyclerViewItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-                        //TODO: do something on item click
+                        //TODO: historical data
                     }
                 }));
         recyclerView.setAdapter(cursorAdapter);
@@ -97,13 +97,11 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                             .input(R.string.input_hint, R.string.input_prefill, new MaterialDialog.InputCallback() {
                                 @Override
                                 public void onInput(MaterialDialog dialog, CharSequence input) {
-                                    // On FAB click, receive user input. Make sure the stock doesn't already exist
-                                    // in the DB and proceed accordingly
                                     Cursor c = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
                                             new String[]{QuoteColumns.SYMBOL}, QuoteColumns.SYMBOL + "= ?",
                                             new String[]{input.toString()}, null);
 
-                                   if (c.getCount() != 0) {
+                                    if (c.getCount() != 0) {
                                         showToast(R.string.already_saved);
                                     } else {
                                         serviceIntent.putExtra("tag", "add");
@@ -175,15 +173,13 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.action_change_units) {
-            Utils.showPercent = !Utils.showPercent;
-            this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_change_units:
+                Utils.showPercent = !Utils.showPercent;
+                this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

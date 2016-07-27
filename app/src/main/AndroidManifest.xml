@@ -43,8 +43,10 @@
             </intent-filter>
         </service>
         <service android:name=".rest.StockIntentService" />
-        <!--TODO: add widget service-->
-
+        <service
+            android:name=".widget.StockWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
         <provider
             android:name=".data.generated.QuoteProvider"
             android:authorities="com.sam_chordas.android.stockhawk.data.QuoteProvider"
@@ -55,7 +57,6 @@
                 <action android:name="com.sam_chordas.android.stockhawk.ACTION_DATA_UPDATED" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/stock_widget_info" />
