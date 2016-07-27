@@ -8,7 +8,7 @@
     android:paddingStart="@dimen/layout_list_padding"
     android:paddingRight="@dimen/layout_list_padding"
     android:paddingEnd="@dimen/layout_list_padding"
-    android:id="@+id/collection_widget_list_item">
+    android:id="@+id/widget_item">
 
     <TextView
         android:id="@+id/collection_widget_stock_symbol"

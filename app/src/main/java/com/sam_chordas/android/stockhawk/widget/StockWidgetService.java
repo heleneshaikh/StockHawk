@@ -3,7 +3,6 @@ package com.sam_chordas.android.stockhawk.widget;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Binder;
-import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -12,7 +11,6 @@ import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteDatabase;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
-import com.sam_chordas.android.stockhawk.rest.Utils;
 import com.sam_chordas.android.stockhawk.ui.DetailActivity;
 
 /**
@@ -69,17 +67,17 @@ public class StockWidgetService extends RemoteViewsService {
                         data == null || !data.moveToPosition(position)) {
                     return null;
                 }
-                RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_list_items);
 
                 String symbol = data.getString(1);
                 String bidPrice = data.getString(2);
 
+                RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_list_items);
                 views.setTextViewText(R.id.symbol, symbol);
                 views.setTextViewText(R.id.bid, bidPrice);
 
-                final Intent intent = new Intent();
-                intent.putExtra(DetailActivity.INTENT_EXTRA_STOCK_SYMBOL, symbol);
-                views.setOnClickFillInIntent(R.id.collection_widget_list_item, intent);
+                final Intent fillIntent = new Intent();
+                fillIntent.putExtra(DetailActivity.INTENT_EXTRA_STOCK_SYMBOL, symbol);
+                views.setOnClickFillInIntent(R.id.widget_item, fillIntent);
 
                 return views;
             }
