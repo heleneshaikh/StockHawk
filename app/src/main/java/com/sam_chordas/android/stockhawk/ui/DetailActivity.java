@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.sam_chordas.android.stockhawk.R;
 
 public class DetailActivity extends Activity {
-    public final static String INTENT_EXTRA_STOCK_SYMBOL = "stock_symbol";
+    public final static String STOCK_SYMBOL = "stock_symbol";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

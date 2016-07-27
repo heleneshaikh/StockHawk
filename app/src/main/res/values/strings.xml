@@ -1,26 +1,34 @@
 <resources>
     <!-- The application name -->
-    <string name="app_name">Stock Hawk</string>
-    <!-- Toast that appears when the app is not connected to the internet-->
-    <string name="network_issue">There is no internet connection</string>
-    <!-- Settings option in action bar -->
+    <string name="app_name" translatable="false">Stock Hawk</string>
+    <!-- Toast that appears when the app cannot connected to the internet-->
+    <string name="network_issue">network unavailable</string>
+    <!--label for the activity in AndroidManifest-->
+    <string name="stock_details">Stock details</string>
+
+    <!--ACTION BAR BUTTONS-->
+    <!-- Button to open the settings -->
     <string name="action_settings">"Go to settings"</string>
-    <!-- Option in action bar to change percentages to dollars -->
+    <!-- Button in action bar to change percentages to dollars -->
     <string name="action_change_units">Change Units</string>
-    <!-- Title of MaterialDialog that appears after clicking on Floating Action Button -->
+
+    <!--FLOATING ACTION BUTTON OPENS MATERIAL DIALOG TO ENTER A QUOTE-->
+    <!-- Title of MaterialDialog -->
     <string name="symbol_search">Symbol Search</string>
     <!-- Text content from MaterialDialog -->
     <string name="content_test">Search for a Stock Symbol</string>
-    <!-- Hint text in input field from MaterialDialog -->
-    <string name="input_hint">FB</string>
-    <!--autocomplete in input text field-->
-    <string name="input_prefill">pre fill</string>
+    <!-- Hint text in input field, as an example for the user -->
+    <string name="input_hint" translatable="false">FB</string>
+    <!-- A stock quote that is shown before the user inputs text, in case user does not enter anything -->
+    <string name="input_prefill" translatable="false"/>
+
+    <!--CONTROL USER INPUT-->
     <!--A toast that appears when the stock has already been saved -->
     <string name="already_saved">This stock is already saved!</string>
     <!--A toast that appears when a quote does not exist -->
     <string name="no_exist">This quote does not exist</string>
-    <!--show details of a given stock-->
-    <string name="stock_details">Stock details</string>
+
+    <!--WIDGET DISPLAYING THE USER'S STOCKS-->
     <!--title of the widget-->
     <string name="widget_title">MY STOCKS</string>
     <!--content description of the Floating Action Button-->

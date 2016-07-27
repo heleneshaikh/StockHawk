@@ -3,6 +3,7 @@ package com.sam_chordas.android.stockhawk.widget;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Binder;
+import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -29,8 +30,7 @@ public class StockWidgetService extends RemoteViewsService {
             private Cursor data = null;
 
             @Override
-            public void onCreate() {
-            }
+            public void onCreate() {}
 
             @Override
             public void onDataSetChanged() {
@@ -75,9 +75,9 @@ public class StockWidgetService extends RemoteViewsService {
                 views.setTextViewText(R.id.symbol, symbol);
                 views.setTextViewText(R.id.bid, bidPrice);
 
-                final Intent fillIntent = new Intent();
-                fillIntent.putExtra(DetailActivity.INTENT_EXTRA_STOCK_SYMBOL, symbol);
-                views.setOnClickFillInIntent(R.id.widget_item, fillIntent);
+                final Intent fillInIntent = new Intent();
+                fillInIntent.putExtra(DetailActivity.STOCK_SYMBOL, symbol);
+                views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
 
                 return views;
             }

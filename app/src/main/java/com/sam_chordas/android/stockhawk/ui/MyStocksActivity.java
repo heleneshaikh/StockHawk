@@ -55,7 +55,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         Stetho.initializeWithDefaults(this);
 
         context = this;
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
             isConnected = true;
@@ -84,7 +84,11 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                 new RecyclerViewItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-                        //TODO: historical data
+                        if (isConnected) {
+
+                        } else {
+                            networkToast();
+                        }
                     }
                 }));
         recyclerView.setAdapter(cursorAdapter);
