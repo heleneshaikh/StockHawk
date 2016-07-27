@@ -25,11 +25,6 @@ public class StockWidgetService extends RemoteViewsService {
             QuoteColumns.BIDPRICE
     };
 
-    static final int INDEX_STOCK_ID = 0;
-    static final int INDEX_SYMBOL = 1;
-    static final int INDEX_BIDPRICE = 2;
-
-
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) { //factory acts as an adapter
         return new RemoteViewsFactory() {
@@ -76,8 +71,8 @@ public class StockWidgetService extends RemoteViewsService {
                 }
                 RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_list_items);
 
-                String symbol = data.getString(INDEX_SYMBOL);
-                String bidPrice = data.getString(INDEX_BIDPRICE);
+                String symbol = data.getString(1);
+                String bidPrice = data.getString(2);
 
                 views.setTextViewText(R.id.symbol, symbol);
                 views.setTextViewText(R.id.bid, bidPrice);
@@ -102,7 +97,7 @@ public class StockWidgetService extends RemoteViewsService {
             @Override
             public long getItemId(int position) {
                 if (data.moveToPosition(position)) {
-                    data.getLong(INDEX_STOCK_ID);
+                    data.getLong(0);
                 }
                 return position;
             }
