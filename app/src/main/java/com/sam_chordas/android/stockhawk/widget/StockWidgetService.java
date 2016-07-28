@@ -21,7 +21,6 @@ public class StockWidgetService extends RemoteViewsService {
     private static final String[] QUOTE_COLUMNS = {
             QuoteDatabase.QUOTES + "." + QuoteColumns._ID,
             QuoteColumns.SYMBOL,
-            QuoteColumns.BIDPRICE
     };
 
     @Override
