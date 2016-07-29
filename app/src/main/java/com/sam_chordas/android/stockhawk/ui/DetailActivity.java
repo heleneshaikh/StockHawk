@@ -5,20 +5,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.robinhood.spark.SparkAdapter;
 import com.robinhood.spark.SparkView;
 import com.sam_chordas.android.stockhawk.R;
+import com.sam_chordas.android.stockhawk.adapter.GraphAdapter;
 import com.sam_chordas.android.stockhawk.data.MyStock;
-import com.sam_chordas.android.stockhawk.data.Query;
 import com.sam_chordas.android.stockhawk.data.Quote;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuotesAPI;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -31,8 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailActivity extends Activity {
     public final static String STOCK_SYMBOL = "stock_symbol";
     public final static String ENDPOINT = "https://query.yahooapis.com/";
-    private GraphAdapter adapter;
-    float[] data;
     static List<Quote> quoteList;
     @BindView(R.id.sparkView)
     SparkView sparkView;
@@ -40,7 +34,6 @@ public class DetailActivity extends Activity {
     TextView symbolView;
     @BindView(R.id.bid_tv)
     TextView bidView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +57,11 @@ public class DetailActivity extends Activity {
         String beginDate = beginYear + "-" + beginMonth + "-" + beginDay;  // 2016/04/28
 
         // SET UP RETROFIT
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         QuotesAPI api = retrofit.create(QuotesAPI.class);
         final String symbol = getIntent().getStringExtra(QuoteColumns.SYMBOL);
         final String query = "select * from yahoo.finance.historicaldata where symbol = '" + symbol + "\' and startDate = \'" + beginDate + "\' and endDate = \'" + endDate + "\'";
@@ -76,54 +69,27 @@ public class DetailActivity extends Activity {
         api.getFeed(query).enqueue(new Callback<MyStock>() {
             @Override
             public void onResponse(Call<MyStock> call, Response<MyStock> response) {
-                MyStock myStock = response.body();
-                Log.v("Test", "test");
-                quoteList = myStock.getQuery().getResults().getQuote();
+                if (response != null) {
+                    Log.v("response", response.raw().toString());
+                    MyStock myStock = response.body();
+                    quoteList = myStock.getQuery().getResults().getQuote();
 
-                bidView.setText(getIntent().getStringExtra(QuoteColumns.BIDPRICE));
-                symbolView.setText(symbol);
+                    float data [] = new float[quoteList.size()];
+                    GraphAdapter adapter = new GraphAdapter(data);
+                    sparkView.setAdapter(adapter);
 
+                    bidView.setText(getIntent().getStringExtra(QuoteColumns.BIDPRICE));
+                    symbolView.setText(symbol);
+
+                    adapter.swapData(data);
+                }
             }
 
             @Override
             public void onFailure(Call<MyStock> call, Throwable t) {
-                makeToast();
+                Toast toast = Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG); //why 'this' not working?
+                toast.show();
             }
         });
-    }
-
-    private void makeToast() {
-        Toast toast = Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG); //why 'this' not working?
-        toast.show();
-    }
-}
-
-
-class GraphAdapter extends SparkAdapter {
-
-    private float[] yData;
-
-    public GraphAdapter(float[] yData) {
-        this.yData = yData;
-    }
-
-    @Override
-    public int getCount() {
-        return yData.length;
-    }
-
-    @Override
-    public Object getItem(int index) {
-        return yData[index];
-    }
-
-    @Override
-    public float getY(int index) {
-        return yData[index];
-    }
-
-    public void swapData(float[] data) {
-        yData = data;
-        notifyDataSetChanged();
     }
 }
