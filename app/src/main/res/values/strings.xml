@@ -35,4 +35,6 @@
     <string name="add_quote">click to add a stock quote</string>
     <!--Text that appears on widget when the list of quotes is empty-->
     <string name="add_quotes">add quotes</string>
+
+    <string name="scrub_format">Scrubbing value: %1$s</string>
 </resources>

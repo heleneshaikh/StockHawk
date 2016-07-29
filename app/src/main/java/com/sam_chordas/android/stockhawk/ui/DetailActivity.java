@@ -34,6 +34,7 @@ public class DetailActivity extends Activity {
     TextView symbolView;
     @BindView(R.id.bid_tv)
     TextView bidView;
+    @BindView(R.id.scrub_info_textview) TextView scrubInfoTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +74,11 @@ public class DetailActivity extends Activity {
                     Log.v("response", response.raw().toString());
                     MyStock myStock = response.body();
                     quoteList = myStock.getQuery().getResults().getQuote();
-
                     float data [] = new float[quoteList.size()];
+                    for (int i = 0; i < quoteList.size(); i++) {
+                        data[i] = Float.parseFloat(quoteList.get(i).getClose());
+                    }
+
                     GraphAdapter adapter = new GraphAdapter(data);
                     sparkView.setAdapter(adapter);
 
@@ -82,6 +86,12 @@ public class DetailActivity extends Activity {
                     symbolView.setText(symbol);
 
                     adapter.swapData(data);
+                    sparkView.setScrubListener(new SparkView.OnScrubListener(){
+                        @Override
+                        public void onScrubbed(Object value) {
+                            scrubInfoTextView.setText(getString(R.string.scrub_format, value));
+                        }
+                    });
                 }
             }
 

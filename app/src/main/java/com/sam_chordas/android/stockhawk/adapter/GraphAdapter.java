@@ -5,7 +5,7 @@ import com.robinhood.spark.SparkAdapter;
 /**
  * Created by heleneshaikh on 29/07/16.
  */
-public class GraphAdapter extends SparkAdapter{
+public class GraphAdapter extends SparkAdapter {
     private float[] yData;
 
     public GraphAdapter(float[] yData) {
