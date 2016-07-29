@@ -5,68 +5,53 @@ package com.sam_chordas.android.stockhawk.data;
  */
 public class Query {
     private Results results;
-
     private String count;
-
     private String created;
-
     private Diagnostics diagnostics;
-
     private String lang;
 
-    public Results getResults ()
-    {
+    public Results getResults() {
         return results;
     }
 
-    public void setResults (Results results)
-    {
+    public void setResults(Results results) {
         this.results = results;
     }
 
-    public String getCount ()
-    {
+    public String getCount() {
         return count;
     }
 
-    public void setCount (String count)
-    {
+    public void setCount(String count) {
         this.count = count;
     }
 
-    public String getCreated ()
-    {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated (String created)
-    {
+    public void setCreated(String created) {
         this.created = created;
     }
 
-    public Diagnostics getDiagnostics ()
-    {
+    public Diagnostics getDiagnostics() {
         return diagnostics;
     }
 
-    public void setDiagnostics (Diagnostics diagnostics)
-    {
+    public void setDiagnostics(Diagnostics diagnostics) {
         this.diagnostics = diagnostics;
     }
 
-    public String getLang ()
-    {
+    public String getLang() {
         return lang;
     }
 
-    public void setLang (String lang)
-    {
+    public void setLang(String lang) {
         this.lang = lang;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [results = "+results+", count = "+count+", created = "+created+", diagnostics = "+diagnostics+", lang = "+lang+"]";
+    public String toString() {
+        return "ClassPojo [results = " + results + ", count = " + count + ", created = " + created + ", diagnostics = " + diagnostics + ", lang = " + lang + "]";
     }
 }

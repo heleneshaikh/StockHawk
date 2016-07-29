@@ -6,19 +6,16 @@ package com.sam_chordas.android.stockhawk.data;
 public class MyStock {
     private Query query;
 
-    public Query getQuery ()
-    {
+    public Query getQuery() {
         return query;
     }
 
-    public void setQuery (Query query)
-    {
+    public void setQuery(Query query) {
         this.query = query;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [query = "+query+"]";
+    public String toString() {
+        return "ClassPojo [query = " + query + "]";
     }
 }

@@ -6,7 +6,8 @@
     tools:context=".ui.DetailActivity">
 
     <com.robinhood.spark.SparkView
-        android:id="@+id/sparkview"
+        android:id="@+id/sparkView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        spark_lineColor="@color/dark_blue"/>
 </LinearLayout>

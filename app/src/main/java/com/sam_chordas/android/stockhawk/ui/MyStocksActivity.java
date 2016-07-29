@@ -36,6 +36,8 @@ import com.google.android.gms.gcm.Task;
 import com.melnykov.fab.FloatingActionButton;
 import com.sam_chordas.android.stockhawk.touch_helper.SimpleItemTouchHelperCallback;
 
+import java.util.Calendar;
+
 public class MyStocksActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private CharSequence title;
@@ -85,7 +87,13 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     @Override
                     public void onItemClick(View v, int position) {
                         if (isConnected) {
-
+                            Cursor cursor = cursorAdapter.getCursor();
+                            cursor.moveToPosition(position);//
+                            Intent intent = new Intent(MyStocksActivity.this, DetailActivity.class);
+                            intent.putExtra(DetailActivity.POSITION, position);
+                            intent.putExtra(QuoteColumns.SYMBOL, cursor.getString(cursor.getColumnIndex("symbol")));
+                            intent.putExtra(QuoteColumns.BIDPRICE, cursor.getString(cursor.getColumnIndex("bid_price")));
+                            startActivity(intent);
                         } else {
                             networkToast();
                         }
