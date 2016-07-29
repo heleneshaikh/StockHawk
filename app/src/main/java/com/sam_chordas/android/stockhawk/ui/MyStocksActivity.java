@@ -90,7 +90,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                             Cursor cursor = cursorAdapter.getCursor();
                             cursor.moveToPosition(position);//
                             Intent intent = new Intent(MyStocksActivity.this, DetailActivity.class);
-                            intent.putExtra(DetailActivity.POSITION, position);
                             intent.putExtra(QuoteColumns.SYMBOL, cursor.getString(cursor.getColumnIndex("symbol")));
                             intent.putExtra(QuoteColumns.BIDPRICE, cursor.getString(cursor.getColumnIndex("bid_price")));
                             startActivity(intent);

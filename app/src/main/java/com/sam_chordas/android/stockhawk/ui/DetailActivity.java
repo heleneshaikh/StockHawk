@@ -3,6 +3,7 @@ package com.sam_chordas.android.stockhawk.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.robinhood.spark.SparkAdapter;
@@ -30,12 +31,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DetailActivity extends Activity {
     public final static String STOCK_SYMBOL = "stock_symbol";
     public final static String ENDPOINT = "https://query.yahooapis.com/";
-    public final static String POSITION = "position";
     private GraphAdapter adapter;
     float[] data;
     static List<Quote> quoteList;
     @BindView(R.id.sparkView)
     SparkView sparkView;
+    @BindView(R.id.symbol_tv)
+    TextView symbolView;
+    @BindView(R.id.bid_tv)
+    TextView bidView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +49,6 @@ public class DetailActivity extends Activity {
 
         // set a SparkAdapter on your SparkView to tell it about your points
         ButterKnife.bind(this);
-        data = new float[0];
-        adapter = new GraphAdapter(data);
-        sparkView.setAdapter(adapter);
 
         //CALENDAR
         Calendar rightNow = Calendar.getInstance();
@@ -62,32 +64,37 @@ public class DetailActivity extends Activity {
         String beginDate = beginYear + "-" + beginMonth + "-" + beginDay;  // 2016/04/28
 
         // SET UP RETROFIT
-        int position = getIntent().getExtras().getInt(POSITION);
-        String symbol = getIntent().getStringExtra(QuoteColumns.SYMBOL);
-        String bid = getIntent().getStringExtra(QuoteColumns.BIDPRICE);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         QuotesAPI api = retrofit.create(QuotesAPI.class);
-        final String query = "select * from yahoo.finance.historicaldata where symbol = '" + symbol + "\' and startDate = \'" + beginDate + "\' and endDate = \'" + endDate+ "\'";
-
+        final String symbol = getIntent().getStringExtra(QuoteColumns.SYMBOL);
+        final String query = "select * from yahoo.finance.historicaldata where symbol = '" + symbol + "\' and startDate = \'" + beginDate + "\' and endDate = \'" + endDate + "\'";
 
         api.getFeed(query).enqueue(new Callback<MyStock>() {
             @Override
             public void onResponse(Call<MyStock> call, Response<MyStock> response) {
                 MyStock myStock = response.body();
                 Log.v("Test", "test");
-                ArrayList<Quote> quote = myStock.getQuery().getResults().getQuote();
+                quoteList = myStock.getQuery().getResults().getQuote();
+
+                bidView.setText(getIntent().getStringExtra(QuoteColumns.BIDPRICE));
+                symbolView.setText(symbol);
+
             }
 
             @Override
             public void onFailure(Call<MyStock> call, Throwable t) {
-                Toast toast = Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG); //why 'this' not working?
-                toast.show();
+                makeToast();
             }
         });
+    }
+
+    private void makeToast() {
+        Toast toast = Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG); //why 'this' not working?
+        toast.show();
     }
 }
 
