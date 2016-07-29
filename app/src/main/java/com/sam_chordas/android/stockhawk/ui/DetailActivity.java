@@ -71,12 +71,14 @@ public class DetailActivity extends Activity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         QuotesAPI api = retrofit.create(QuotesAPI.class);
-        final String query = "select * from yahoo.finance.historicaldata where symbol = ''" + symbol + "\'' and startDate = \''" + beginDate + "\'' and endDate = \''" + endDate;
+        final String query = "select * from yahoo.finance.historicaldata where symbol = '" + symbol + "\' and startDate = \'" + beginDate + "\' and endDate = \'" + endDate+ "\'";
+
 
         api.getFeed(query).enqueue(new Callback<MyStock>() {
             @Override
             public void onResponse(Call<MyStock> call, Response<MyStock> response) {
                 MyStock myStock = response.body();
+                Log.v("Test", "test");
                 ArrayList<Quote> quote = myStock.getQuery().getResults().getQuote();
             }
 
