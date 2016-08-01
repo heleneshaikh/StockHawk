@@ -18,4 +18,6 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="textSize_widget">23sp</dimen>
     <dimen name="layout_list_padding">16dp</dimen>
     <dimen name="padding_list_tv">10sp</dimen>
+    <dimen name="symbol_padding">15dp</dimen>
+    <dimen name="grid_padding">20dp</dimen>
 </resources>

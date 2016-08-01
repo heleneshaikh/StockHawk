@@ -8,46 +8,88 @@
 
     <com.robinhood.spark.SparkView
         android:id="@+id/sparkView"
-        spark_lineColor="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         app:spark_scrubEnabled="true" />
 
+    <TextView
+        android:id="@+id/scrub_info_textview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:text="@string/scrub_empty"/>
+
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnCount="2">
+        android:layout_marginTop="20dp"
+        android:columnCount="2"
+        android:paddingEnd="@dimen/grid_padding"
+        android:paddingLeft="@dimen/grid_padding"
+        android:paddingRight="@dimen/grid_padding"
+        android:paddingStart="@dimen/grid_padding"
+        android:paddingTop="35dp"
+        android:background="@color/dark_blue">
 
         <TextView
             android:id="@+id/symbol_tv"
+            style="@style/StockSymbolTextStyle"
             android:layout_column="0"
             android:layout_row="0"
             android:gravity="center"
+            android:paddingBottom="@dimen/symbol_padding"
             android:text="@string/Symbol_detail"
             android:textAppearance="?android:textAppearanceLarge" />
 
         <TextView
             android:id="@+id/symbol_value"
+            style="@style/StockSymbolTextStyle"
             android:layout_column="1"
-            android:layout_row="0" />
+            android:layout_gravity="end"
+            android:layout_row="0"
+            android:paddingBottom="15dp" />
 
-        <TextView android:id="@+id/min_bid_tv"
+        <TextView
+            android:id="@+id/min_bid_tv"
+            style="@style/StockSymbolTextStyle"
             android:layout_column="0"
             android:layout_row="1"
-            android:text="@string/min_bid"/>
+            android:text="@string/min_bid" />
 
-        <TextView android:id="@+id/min_bid_value"
+        <TextView
+            android:id="@+id/min_bid_value"
+            style="@style/BidPriceTextStyle"
             android:layout_column="1"
-            android:layout_row="1"/>
+            android:layout_gravity="end"
+            android:layout_row="1" />
 
-        <TextView android:id="@+id/max_bid_tv"
+        <TextView
+            android:id="@+id/max_bid_tv"
+            style="@style/StockSymbolTextStyle"
             android:layout_column="0"
             android:layout_row="2"
-            android:text="@string/min_bid"/>
+            android:text="@string/max_bid" />
 
-        <TextView android:id="@+id/max_bid_value"
+        <TextView
+            android:id="@+id/max_bid_value"
+            style="@style/BidPriceTextStyle"
             android:layout_column="1"
-            android:layout_row="2"/>
+            android:layout_gravity="end"
+            android:layout_row="2" />
+
+        <TextView android:id="@+id/currentBid_tv"
+            style="@style/StockSymbolTextStyle"
+            android:layout_column="0"
+            android:layout_row="3"
+            android:text="@string/current_bid"/>
+
+        <TextView android:id="@+id/currentBid_value"
+            style="@style/BidPriceTextStyle"
+            android:layout_gravity="end"
+            android:layout_column="1"
+            android:layout_row="3"/>
 
     </GridLayout>
 

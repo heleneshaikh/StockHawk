@@ -39,4 +39,7 @@
     <string name="scrub_format">Scrubbing value: %1$s</string>
     <string name="Symbol_detail">Symbol</string>
     <string name="min_bid">Minimum bid</string>
+    <string name="max_bid">Maximum bid</string>
+    <string name="current_bid">Current bid</string>
+    <string name="scrub_empty">no data</string>
 </resources>
