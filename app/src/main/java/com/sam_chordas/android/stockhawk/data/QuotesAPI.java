@@ -9,6 +9,6 @@ import retrofit2.http.Query;
  */
 public interface QuotesAPI {
 
-    @GET("v1/public/yql?&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys&callback=")
+    @GET("/v1/public/yql?&format=json&diagnostics=true&env=store://datatables.org/alltableswithkeys&callback=")
     Call<MyStock> getFeed(@Query("q") String query);
 }
