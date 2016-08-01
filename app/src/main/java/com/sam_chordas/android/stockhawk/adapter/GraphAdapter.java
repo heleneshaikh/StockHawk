@@ -3,6 +3,7 @@ package com.sam_chordas.android.stockhawk.adapter;
 import com.robinhood.spark.SparkAdapter;
 
 /**
+<<<<<<< HEAD
  * Created by heleneshaikh on 01/08/16.
  */
 
