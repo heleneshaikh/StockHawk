@@ -1,10 +1,12 @@
 package com.sam_chordas.android.stockhawk.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.robinhood.spark.SparkView;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.adapter.GraphAdapter;
@@ -12,8 +14,10 @@ import com.sam_chordas.android.stockhawk.data.MyStock;
 import com.sam_chordas.android.stockhawk.data.Quote;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuotesAPI;
+
 import java.util.Calendar;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -34,7 +38,10 @@ public class DetailActivity extends Activity {
     TextView minBidView;
     @BindView(R.id.max_bid_value)
     TextView maxBidView;
-//    @BindView(R.id.scrub_info_textview) TextView scrubInfoTextView;
+    @BindView(R.id.currentBid_tv)
+    TextView currentBidView;
+    @BindView(R.id.scrub_info_textview)
+    TextView scrubInfoTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +60,13 @@ public class DetailActivity extends Activity {
         rightNow.add(Calendar.MONTH, -2);
         String beginYear = String.valueOf(rightNow.get(Calendar.YEAR));
         String beginMonth = String.valueOf(rightNow.get(Calendar.MONTH) + 1);
+        if (Integer.parseInt(beginMonth) <= 9) {
+            beginMonth = "0".concat(beginMonth);
+        }
         String beginDay = String.valueOf(rightNow.get(Calendar.DAY_OF_MONTH));
+        if (Integer.parseInt(beginDay) <= 9) {
+            beginDay = "0".concat(beginDay);
+        }
         String beginDate = beginYear + "-" + beginMonth + "-" + beginDay;  // 2016/04/28
 
         // SET UP RETROFIT
@@ -73,22 +86,50 @@ public class DetailActivity extends Activity {
                     Log.v("response", response.raw().toString());
                     MyStock myStock = response.body();
                     quoteList = myStock.getQuery().getResults().getQuote();
-                    float data [] = new float[quoteList.size()];
-                    for (int i = 0; i < quoteList.size(); i++) {
+                    int size = quoteList.size();
+                    float data[] = new float[size];
+                    float high[] = new float[size];
+                    float low[] = new float[size];
+
+                    for (int i = 0; i < size; i++) {
                         data[i] = Float.parseFloat(quoteList.get(i).getClose());
+                        high[i] = Float.parseFloat(quoteList.get(i).getHigh());
+                        low[i] = Float.parseFloat(quoteList.get(i).getLow());
                     }
 
-                    GraphAdapter adapter = new GraphAdapter(data);
-                    sparkView.setAdapter(adapter);
+                    float sumHigh = 0.0F;
+                    for (float highNum : high) {
+                        sumHigh += highNum;
+                    }
+                    float averageHigh = sumHigh / size;
 
-                    //TODO SET THE VIEWS
+                    float sumLow = 0.0F;
+                    for (float lowNum : low) {
+                        sumLow += lowNum;
+                    }
+                    float averageLow = sumLow / size;
+
+                    float sumCurrent = 0.0F;
+                    for (float currentNum : data) {
+                        sumCurrent += currentNum;
+                    }
+                    float avgCurrent = sumCurrent / size;
+
+                    maxBidView.setText("" + averageHigh);
+                    minBidView.setText("" + averageLow);
+                    symbolView.setText(symbol);
+                    currentBidView.setText("" + avgCurrent);
+
+                    GraphAdapter adapter = new GraphAdapter(data);
+                    sparkView.setLineColor(getColor(R.color.dark_blue));
+                    sparkView.setAdapter(adapter);
 
                     adapter.swapData(data);
 
-                    sparkView.setScrubListener(new SparkView.OnScrubListener(){
+                    sparkView.setScrubListener(new SparkView.OnScrubListener() {
                         @Override
                         public void onScrubbed(Object value) {
-//                            scrubInfoTextView.setText(getString(R.string.scrub_format, value));
+                            scrubInfoTextView.setText(getString(R.string.scrub_format, value));
                         }
                     });
                 }
@@ -96,7 +137,7 @@ public class DetailActivity extends Activity {
 
             @Override
             public void onFailure(Call<MyStock> call, Throwable t) {
-                Toast toast = Toast.makeText(getApplicationContext(), "An error occured", Toast.LENGTH_LONG); //why 'this' not working?
+                Toast toast = Toast.makeText(DetailActivity.this, "An error occured", Toast.LENGTH_LONG); //why 'this' not working?
                 toast.show();
             }
         });
