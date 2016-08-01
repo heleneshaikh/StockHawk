@@ -15,11 +15,11 @@
     <TextView
         android:id="@+id/scrub_info_textview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="30dp"
         android:gravity="center"
         android:textAppearance="?android:textAppearanceLarge"
-        android:text="@string/scrub_empty"/>
+        android:text="@string/scrub_empty"
+        android:textColor="#FFFFFF"/>
 
     <GridLayout
         android:layout_width="match_parent"
