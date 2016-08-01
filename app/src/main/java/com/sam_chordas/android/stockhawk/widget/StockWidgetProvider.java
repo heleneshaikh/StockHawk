@@ -43,7 +43,7 @@ public class StockWidgetProvider extends AppWidgetProvider { //widget actions
             }
 
             //open DetailActivity when click on widget_list
-            Intent intentTemplate = new Intent(context, DetailActivity.class);
+            Intent intentTemplate = new Intent(context, MyStocksActivity.class);
             PendingIntent pendingIntentTemplate = android.support.v4.app.TaskStackBuilder.create(context)
                     .addNextIntentWithParentStack(intentTemplate)
                     .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);

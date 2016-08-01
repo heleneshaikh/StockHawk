@@ -1,12 +1,10 @@
 package com.sam_chordas.android.stockhawk.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.robinhood.spark.SparkView;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.adapter.GraphAdapter;
@@ -14,10 +12,8 @@ import com.sam_chordas.android.stockhawk.data.MyStock;
 import com.sam_chordas.android.stockhawk.data.Quote;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuotesAPI;
-
 import java.util.Calendar;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -38,7 +34,7 @@ public class DetailActivity extends Activity {
     TextView minBidView;
     @BindView(R.id.max_bid_value)
     TextView maxBidView;
-    @BindView(R.id.currentBid_tv)
+    @BindView(R.id.currentBid_value)
     TextView currentBidView;
     @BindView(R.id.scrub_info_textview)
     TextView scrubInfoTextView;
@@ -121,7 +117,6 @@ public class DetailActivity extends Activity {
                     currentBidView.setText("" + avgCurrent);
 
                     GraphAdapter adapter = new GraphAdapter(data);
-                    sparkView.setLineColor(getColor(R.color.dark_blue));
                     sparkView.setAdapter(adapter);
 
                     adapter.swapData(data);
@@ -129,7 +124,9 @@ public class DetailActivity extends Activity {
                     sparkView.setScrubListener(new SparkView.OnScrubListener() {
                         @Override
                         public void onScrubbed(Object value) {
-                            scrubInfoTextView.setText(getString(R.string.scrub_format, value));
+                            if (value != null) {
+                                scrubInfoTextView.setText(getString(R.string.scrub_format, value));
+                            }
                         }
                     });
                 }

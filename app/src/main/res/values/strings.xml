@@ -7,12 +7,14 @@
     <string name="stock_details">Stock details</string>
 
     <!--ACTION BAR BUTTONS-->
+
     <!-- Button to open the settings -->
     <string name="action_settings">"Go to settings"</string>
     <!-- Button in action bar to change percentages to dollars -->
     <string name="action_change_units">Change Units</string>
 
     <!--FLOATING ACTION BUTTON OPENS MATERIAL DIALOG TO ENTER A QUOTE-->
+
     <!-- Title of MaterialDialog -->
     <string name="symbol_search">Symbol Search</string>
     <!-- Text content from MaterialDialog -->
@@ -20,15 +22,17 @@
     <!-- Hint text in input field, as an example for the user -->
     <string name="input_hint" translatable="false">FB</string>
     <!-- A stock quote that is shown before the user inputs text, in case user does not enter anything -->
-    <string name="input_prefill" translatable="false"/>
+    <string name="input_prefill" translatable="false" />
 
     <!--CONTROL USER INPUT-->
+
     <!--A toast that appears when the stock has already been saved -->
     <string name="already_saved">This stock is already saved!</string>
     <!--A toast that appears when a quote does not exist -->
     <string name="no_exist">This quote does not exist</string>
 
     <!--WIDGET DISPLAYING THE USER'S STOCKS-->
+
     <!--title of the widget-->
     <string name="widget_title">MY STOCKS</string>
     <!--content description of the Floating Action Button-->
@@ -36,10 +40,20 @@
     <!--Text that appears on widget when the list of quotes is empty-->
     <string name="add_quotes">add quotes</string>
 
-    <string name="scrub_format">Scrubbing value: %1$s</string>
-    <string name="Symbol_detail">Symbol</string>
+    <!--GRAPH THAT DISPLAYS THE STOCK'S VALUE OVER TIME. THE USER CAN SWIPE TO SEE THE BIDS ON
+     A PARTICULAR LOCATION-->
+
+    <!--String format for displaying data when user swipes over graph-->
+    <string name="scrub_format" translatable="false">Bid: %1$s</string>
+    <!-- A grid view with a row displaying the min, max and current bids -->
     <string name="min_bid">Minimum bid</string>
     <string name="max_bid">Maximum bid</string>
     <string name="current_bid">Current bid</string>
-    <string name="scrub_empty">no data</string>
+    <!--Name of the first column in the grid view-->
+    <string name="Symbol_detail">Symbol</string>
+    <!--value that appears below the graph when the user has not swiped to see data yet -->
+    <string name="scrub_empty">Swipe to see bids </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
